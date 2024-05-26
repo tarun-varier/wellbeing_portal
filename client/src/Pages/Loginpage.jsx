@@ -1,17 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import { logo, google } from "../assets";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faWifi } from '@fortawesome/free-solid-svg-icons'
-
+import { useNavigate } from 'react-router-dom';
 
 function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:5000/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setMessage(data.message);
+        // Redirect to dashboard or handle successful login
+        navigate('/dashboard');
+      } else {
+        setMessage(data.message);
+      }
+    } catch (error) {
+      setMessage('Error connecting to the server');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-custom-blue flex flex-col">
       {/* Header Section */}
       <header className="flex justify-between items-center px-8 py-4">
         <img src={logo} alt="Logo" className="h-12 w-auto " />
         <div className="flex-grow flex justify-center ml-[-10%]">
-          <button className="text-2xl font-bold px-6 py-3 rounded-lg">
+          <button className="text-2xl font-bold px-6 py-3 rounded-lg" onClick={()=>navigate('/')}>
             Home
           </button>
         </div>{" "}
@@ -33,7 +59,7 @@ function LoginPage() {
           {/* Right Column */}
           <div className="md:w-1/2 bg-gradient-to-b from-custom-blue to-white rounded-2xl shadow-md p-8">
             {/* Form goes here */}
-            <form>
+            <form onSubmit={handleLogin}>
               <h2 className="text-2xl text-center font-palanquin">
                 Don't worry if you are not in the campus
               </h2>
@@ -42,6 +68,8 @@ function LoginPage() {
                   <input
                     type="email"
                     id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-transparent"
                     placeholder="user@iiitkottayam.ac.in"
                   />
@@ -52,6 +80,8 @@ function LoginPage() {
                   <input
                     type="password"
                     id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-transparent"
                     placeholder="********"
                   />
@@ -75,6 +105,7 @@ function LoginPage() {
                 </button>
               </div>
             </form>
+            {message && <p className="text-center mt-4">{message}</p>}
           </div>
         </div>
       </main>

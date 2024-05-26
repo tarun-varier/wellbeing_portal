@@ -1,10 +1,17 @@
-import React from "react";
-import LoginPage from "./Pages/Loginpage";
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import HomePage from './Pages/Home';
+import LoginPage from './Pages/Loginpage';
+import Dashboard from './Pages/Studentdashboard';
 
-function App() {
+const App = () => {
   return (
-    <LoginPage />
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+    </Routes>
   );
-}
+};
 
 export default App;
