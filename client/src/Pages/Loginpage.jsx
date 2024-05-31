@@ -34,8 +34,8 @@ function LoginPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-custom-blue flex flex-col">
       {/* Header Section */}
-      <header className="flex justify-between items-center px-8 py-4">
-        <img src={logo} alt="Logo" className="h-12 w-auto " />
+      <header className="flex justify-between items-center px-8 py-3">  
+        <img src={logo} alt="Logo" className="h-20 " />
         <div className="flex-grow flex justify-center ml-[-10%]">
           <button className="text-2xl font-bold px-6 py-3 rounded-lg" onClick={()=>navigate('/')}>
             Home
