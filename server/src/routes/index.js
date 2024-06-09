@@ -1,15 +1,13 @@
-import { Router } from 'express';
+import express from 'express';
+import authRoutes from './authRoutes.js';
+import ensureAuthenticated from '../middleware/authMiddleware.js';
 
-const router = Router();
+const router = express.Router();
 
-// Dummy login endpoint
-router.post('/login', (req, res) => {
-    const { email, password } = req.body;
-    // Implement actual authentication logic here
-    if (email === 'test@iiitkottayam.ac.in' && password === 'password') {
-        return res.json({ message: 'Login successful' });
-    }
-    return res.status(401).json({ message: 'Invalid credentials' });
+router.use(authRoutes);
+
+router.get('/dashboard', ensureAuthenticated, (req, res) => {
+  res.render('dashboard', { user: req.user });
 });
- 
+
 export default router;

@@ -8,6 +8,12 @@ function LoginPage() {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
+
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:3000/auth/google";
+  };
+
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -100,6 +106,7 @@ function LoginPage() {
                 <button
                   type="button"
                   className="flex items-center justify-center w-12 h-12  bg-gray-200 rounded-full mt-4"
+                  onClick={handleGoogleLogin}
                 >
                   <img src={google} alt="Google" className="w-6 h-6 " />
                 </button>
