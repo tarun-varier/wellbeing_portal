@@ -1,56 +1,28 @@
-import passport from 'passport';
-import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
-import { createUser, findUserByGoogleId } from '../models/userModel.js';
+import User from '../models/userModel.js';
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google/callback",
-      userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      try {
-        let user = await findUserByGoogleId(profile.id);
-        if (!user) {
-          user = await createUser(profile.id, profile.displayName, profile.emails[0].value);
+export const login = async (req, res) => {
+    try{
+        const {username, password} = req.body;
+        const user = await User.findOne({username});
+        if(!user){
+            return res.status(400).json({error: "User not found"});
         }
-        return done(null, user);
-      } catch (err) {
-        return done(err, null);
-      }
+        if (password!=user.password){
+            return res.status(400).json({error:"Invalid password"})
+        }
+        res.status(200).json({
+            _id : user._id,
+            username : user.username,
+            message:"User logged in successfully"
+        })
+
+    }catch{
+        console.error('Error in login controller: ', error.message);
+        res.status(500).json({error: "Internal Server Error"});
     }
-  )
-);
+}
 
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await findUserById(id);
-    done(null, user);
-  } catch (err) {
-    done(err, null);
-  }
-});
-
-const authController = {
-  googleAuth: passport.authenticate("google", { scope: ["profile", "email"] }),
-  googleCallback: passport.authenticate("google", {
-    failureRedirect: "/login",
-    successRedirect: "/dashboard",
-  }),
-  logout: (req, res) => {
-    req.logout((err) => {
-      if (err) {
-        return res.status(500).send("Error logging out");
-      }
-      res.redirect("/");
-    });
-  },
-};
-
-export default authController;
+export const logout = async (req, res) => {
+    console.log("Logout Controller");
+    res.send("User logged out successfully");
+}

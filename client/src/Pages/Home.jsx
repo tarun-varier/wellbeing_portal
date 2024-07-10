@@ -12,7 +12,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
+    <div className="min-h-screen bg-white-400 flex flex-col">
       {/* Header Section */}
       <header className="bg-white text-gray-800 p-4 flex justify-between items-center shadow-md fixed w-full z-10">
         <div className="flex items-center space-x-4">
@@ -34,7 +34,7 @@ const HomePage = () => {
       </header>
 
       {/* Carousel Section */}
-      <Carousel />
+      {/* <Carousel /> */}
       
 
       {/* Main Content */}
@@ -47,9 +47,9 @@ const HomePage = () => {
       </main>
 
       {/* Footer Section */}
-      <footer className="bg-white text-gray-800 p-4 text-center shadow-t-md">
+      {/* <footer className="bg-white text-gray-800 p-4 text-center shadow-t-md">
         &copy; {new Date().getFullYear()} IIIT Kottayam. All rights reserved.
-      </footer>
+      </footer> */}
     </div>
   );
 };

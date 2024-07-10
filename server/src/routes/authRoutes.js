@@ -1,17 +1,10 @@
-import express from 'express';
-import passport from 'passport';
+import express from 'express'
+
+import {login , logout} from '../controllers/authController.js'
 
 const router = express.Router();
 
-router.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
-);
-
-router.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  (req, res) => {
-    res.redirect('/dashboard');
-  }
-);
+router.post('/login', login);
+router.post('/logout', logout);
 
 export default router;
