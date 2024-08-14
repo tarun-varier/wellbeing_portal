@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Articles = () => {
+const ArticleList = () => {
   const articles = [
     { id: 1, title: 'Mental Health Awareness', content: 'Mental health is important...' },
     { id: 2, title: 'Dealing with Stress', content: 'Stress can be managed by...' },
@@ -22,4 +22,4 @@ const Articles = () => {
   );
 };
 
-export default Articles;
+export default ArticleList;

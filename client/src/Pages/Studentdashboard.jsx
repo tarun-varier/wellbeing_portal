@@ -11,8 +11,8 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
-      <header className="text-4xl font-bold mb-8">Student Dashboard</header>
+    <div className="min-h-screen bg-gray-100 ">
+      <header className="text-4xl font-bold m-8">Student Dashboard</header>
       <p className="text-xl mb-8">Welcome to your dashboard.</p>
       <button
         onClick={handleLogout}
